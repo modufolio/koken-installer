@@ -969,20 +969,7 @@ OUT;
 							<div data-group="browser" class="test"></div>
 							<div data-group="loopback" class="test"></div>
 						</div>
-
-						<p id="test-wait">Testing your server for compatibility. Please wait...</p>
-
-						<div id="test-failed">
-
-							<div id="test-errors"></div>
-
-							<div id="run-again" style="display:none" class="row button">
-
-								<button data-step="test" title="Run serve test again">Run test again</button>
-
-							</div>
-						</div>
-
+                        
 						<div id="test-passed">
 
 							<div class="row button">
