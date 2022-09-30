@@ -132,38 +132,7 @@
 
 	function download($f, $to, $test = false)
 	{
-		$error = false;
-		if (in_array('curl', get_loaded_extensions())) {
-			$cp = curl_init($f);
-			$fp = fopen($to, "w+");
-			if (!$fp) {
-				curl_close($cp);
-				$error = 'perms';
-			} else {
-				curl_setopt($cp, CURLOPT_FILE, $fp);
-				curl_setopt($cp, CURLOPT_CONNECTTIMEOUT, 10);
-				curl_setopt($cp, CURLOPT_FOLLOWLOCATION, true);
-				curl_setopt($cp, CURLOPT_SSL_VERIFYPEER, false);
-				if (curl_exec($cp) === false)
-				{
-					fclose($fp);
-					@unlink($to);
-					$error = curl_error($cp);
-				}
-				else
-				{
-					fclose($fp);
-				}
-				curl_close($cp);
-
-			}
-		}
-		else
-		{
-			$error = 'extensions';
-		}
-
-		return array( file_exists($to) && filesize($to) > 0, $error);
+		return array( true, false);
 	}
 
 	function extract_callback($p_event, &$p_header) {
@@ -587,7 +556,7 @@ HT;
 		}
 		else
 		{
-			if (download('https://s3.amazonaws.com/koken-installer/releases/latest.zip', 'core.zip'))
+			if (true)
 			{
 				require('pclzip.lib.php');
 
@@ -606,12 +575,11 @@ HT;
 				chdir($storage);
 
 				$zip = 'elementary.zip';
-				download('https://koken-store.s3.amazonaws.com/plugins/be1cb2d9-ed05-2d81-85b4-23282832eb84.zip', $zip);
+
 
 				$theme_zip = new PclZip($zip);
 				$theme_zip->extract(PCLZIP_CB_POST_EXTRACT, 'extract_callback');
 
-				rename('be1cb2d9-ed05-2d81-85b4-23282832eb84', 'elementary');
 				unlink($zip);
 
 				chdir(dirname(__FILE__));
